@@ -3,5 +3,8 @@
     "parserOptions": {
         "tsconfigRootDir": "C:/Users/81907/OneDrive/Documents/Projects/clean-node-api2",
         "project": "./tsconfig.json"
+    },
+    "rules": {
+      "@typescript-eslint/strict-boolean-expressions": "off"
     }
 }

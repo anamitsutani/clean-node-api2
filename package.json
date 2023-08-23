@@ -33,6 +33,8 @@
     "typescript": "^4.4.3"
   },
   "dependencies": {
+    "@types/bcrypt": "^5.0.0",
+    "bcrypt": "^5.1.1",
     "validator": "^13.11.0"
   }
 }

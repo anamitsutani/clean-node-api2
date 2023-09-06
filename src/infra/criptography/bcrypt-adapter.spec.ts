@@ -30,6 +30,16 @@ describe('DbAddAccount Usecase', () => {
     expect(hash).toBe('hash')
   })
 
+  test('Should throw if hash throws', async () => {
+    const sut = makeSut()
+    type hashReturningBoolean = (value: string) => Promise<string>
+    (bcrypt.hash as hashReturningBoolean) = jest.fn(async () => {
+      return await Promise.reject(new Error())
+    })
+    const promise = sut.hash('any_value')
+    expect(promise).rejects.toThrow()
+  })
+
   test('Should call compare with correct values', async () => {
     const sut = makeSut()
     const hashSpy = jest.spyOn(bcrypt, 'compare')
@@ -53,13 +63,13 @@ describe('DbAddAccount Usecase', () => {
     expect(isValid).toBe(false)
   })
 
-  // test('Should throw if bcrypt throws', async () => {
-  //   const sut = makeSut()
-  //   type hashReturningString = (data: string | Buffer, saltOrRounds: string | number) => Promise<string>
-  //   (bcrypt.hash as hashReturningString) = jest.fn(async () => {
-  //     return await Promise.reject(new Error())
-  //   })
-  //   const promise = await sut.hash('any_value')
-  //   expect(promise).toThrow()
-  // })
+  test('Should throw if compare throws', async () => {
+    const sut = makeSut()
+    type compareReturningBoolean = (data: string | Buffer, encrypted: string) => Promise<boolean>
+    (bcrypt.compare as compareReturningBoolean) = jest.fn(async () => {
+      return await Promise.reject(new Error())
+    })
+    const promise = sut.compare('any_value', 'any_hash')
+    expect(promise).rejects.toThrow()
+  })
 })

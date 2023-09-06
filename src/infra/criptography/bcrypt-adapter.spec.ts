@@ -43,10 +43,21 @@ describe('DbAddAccount Usecase', () => {
     expect(isValid).toBe(true)
   })
 
+  test('Should return false when compare fails', async () => {
+    const sut = makeSut()
+    type compareReturningBoolean = (data: string | Buffer, encrypted: string) => Promise<boolean>
+    (bcrypt.compare as compareReturningBoolean) = jest.fn(async () => {
+      return await Promise.resolve(false)
+    })
+    const isValid = await sut.compare('any_value', 'any_hash')
+    expect(isValid).toBe(false)
+  })
+
   // test('Should throw if bcrypt throws', async () => {
   //   const sut = makeSut()
-  //   jest.spyOn(bcrypt, 'hash').mockImplementationOnce(() => {
-  //     throw new Error()
+  //   type hashReturningString = (data: string | Buffer, saltOrRounds: string | number) => Promise<string>
+  //   (bcrypt.hash as hashReturningString) = jest.fn(async () => {
+  //     return await Promise.reject(new Error())
   //   })
   //   const promise = await sut.hash('any_value')
   //   expect(promise).toThrow()

@@ -5,7 +5,12 @@
         "target": "es2019",
         "esModuleInterop": true,
         "strictNullChecks": false,
-        "strict": false,
-        "allowJs": true
-    }
+    },
+    "include": [
+      "src"
+    ],
+    "exclude": [
+      "**/*.spec.ts",
+      "**/*.test.ts"
+    ]
 }

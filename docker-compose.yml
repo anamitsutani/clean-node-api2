@@ -1,4 +1,4 @@
-version: "3"
+version: '3'
 services: 
   mongo:
     container_name: mongo-container
@@ -9,7 +9,7 @@ services:
     ports:
       - "27017:27017"
   api:
-    container: api-container
+    container_name: api-container
     build: .
     restart: always
     image: clean-node-api2
